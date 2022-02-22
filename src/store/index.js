@@ -11,35 +11,39 @@ export default createStore({
   // Define the contents of the Store
   state: {
     users: [],
-    activeUser: User,
+    activeUser: null,
     loggedIn: false
   },
 
   // Store/Storage Mutators
   mutations: {
     CREATE_USER(state, user) {
-      state.users.push(user)
+      state.users.push(user);
     },
     SET_USER(state, user) {
-      storage.setStorageSync("user", user);
+      state.activeUser = user;
+      // storage.setStorageSync("user", user);
     },
     LOGIN(state, login) {
-      storage.setStorageSync("login", true, 900000);
-      storage.setStorageSync("username", login.login)
-      storage.setStorageSync("password", login.pass)
+      return;
+      // storage.setStorageSync("login", true, 900000);
+      // storage.setStorageSync("username", login.login)
+      // storage.setStorageSync("password", login.pass)
     },
     LOGOUT(state) {
-      storage.clearStorageSync();
+      state.activeUser = null;
+      // storage.clearStorageSync();
     }
   },
 
   // Store/Storage Getters
   getters: {
     getUsers: state => {
-      return state.users
+      return state.users;
     },
     getActiveUser: state => {
-      return storage.getStorageSync("user");
+      return state.activeUser;
+      // return storage.getStorageSync("user");
     },
     getUserByID: (user) => (findUser) => {
       let userArray = state.users;

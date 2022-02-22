@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://peront.ddns.net:3223/api/users/';
+const url = 'http://peront-home:5050/api/users/';
 
 class UserService {
     // Get Users

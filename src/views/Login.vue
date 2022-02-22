@@ -47,32 +47,36 @@ export default {
     },
     methods: {
         async login() {            
-            try {
-                this.checkStorage();
-            } catch (error) {
-                console.log(error);
+            // try {
+            //     this.checkStorage();
+            // } catch (error) {
+            //     console.log(error);
+            //     this.checkDatabase();
+            // }
+            if(this.$store.getters.getActiveUser == null){
                 this.checkDatabase();
             }
+            else { this.$router.push('/'); }
         },
-        async checkStorage() {
-            if (this.$storage.getStorageSync("username") && this.$storage.getStorageSync("password")) {
-                var uname = this.$storage.getStorageSync("username");
-                var pword = this.$storage.getStorageSync("password");
+        // async checkStorage() {
+        //     if (this.$store.getters("") && this.$storage.getStorageSync("password")) {
+        //         var uname = this.$storage.getStorageSync("username");
+        //         var pword = this.$storage.getStorageSync("password");
 
-                if(this.username === uname && this.password === pword) {
-                    this.$store.commit('LOGIN', { uname, pword });
-                    this.$router.push('/');
-                }
-                else {
-                    this.failedLogin = true;
-                    this.password = '';
-                    throw new Error("User not in storage.");
-                }
-            }
-            else {
-                throw new Error("User not in storage.");
-            }
-        },
+        //         if(this.username === uname && this.password === pword) {
+        //             this.$store.commit('LOGIN', { uname, pword });
+        //             this.$router.push('/');
+        //         }
+        //         else {
+        //             this.failedLogin = true;
+        //             this.password = '';
+        //             throw new Error("User not in storage.");
+        //         }
+        //     }
+        //     else {
+        //         throw new Error("User not in storage.");
+        //     }
+        // },
         async checkDatabase() {
             // Grab the user associated with the input username
             var users = [];
@@ -101,6 +105,7 @@ export default {
                 this.showModal = true;
 
                 this.$store.commit('SET_USER', user);
+                this.$router.push('/');
                 
                 return;
             }
